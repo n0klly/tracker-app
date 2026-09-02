@@ -15,7 +15,7 @@ public class JwtCore {
     @Value("${testing.app.secret}")
     private String secret;
 
-    @Value("${testing.app.exparationMs}")
+    @Value("${testing.app.expirationMs}")
     private int lifetime;
 
     public String generateToken(Authentication authentication) {
