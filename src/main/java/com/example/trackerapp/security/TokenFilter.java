@@ -19,11 +19,11 @@ import java.security.Security;
 @Component
 public class TokenFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
-    private JwtCore jwtCore;
-    private UserDetailsService UserDetailsService;
+    private final JwtCore jwtCore;
 
-    public TokenFilter(UserDetailsService userDetailsService) {
+    public TokenFilter(UserDetailsService userDetailsService, JwtCore jwtCore) {
         this.userDetailsService = userDetailsService;
+        this.jwtCore = jwtCore;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class TokenFilter extends OncePerRequestFilter {
                 try{
                     login = jwtCore.getNameFromJwt(jwt);
                 } catch(ExpiredJwtException e){
-                    //доделать
+
                 }
                 if(login != null && SecurityContextHolder.getContext().getAuthentication() == null){
                     userDetails = userDetailsService.loadUserByUsername(login);

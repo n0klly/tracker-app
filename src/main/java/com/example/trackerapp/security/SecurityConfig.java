@@ -17,8 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Bean//добавить урлы для админов итп
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, TokenFilter tokenFilter) throws Exception{
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, TokenFilter tokenFilter) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exceptions -> exceptions
@@ -27,9 +27,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/auth/**").permitAll()
-                        .requestMatchers("/secured/user").fullyAuthenticated()
-                        .requestMatchers( "/admin/**").hasRole(UserRole.ADMIN.name())
-                        .anyRequest().permitAll()
+                        .requestMatchers("/admin/**").hasRole(UserRole.ADMIN.name())
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

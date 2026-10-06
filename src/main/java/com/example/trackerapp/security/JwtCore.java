@@ -19,12 +19,12 @@ public class JwtCore {
     private int lifetime;
 
     public String generateToken(Authentication authentication) {
-        UserDetailsImpl userDetails = (UserDetailsImpl)authentication.getPrincipal();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         return Jwts.builder()
                 .subject(userDetails.getLogin())
                 .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime()+lifetime))
-                .signWith(SignatureAlgorithm.HS256, secret)
+                .expiration(new Date(System.currentTimeMillis() + lifetime))
+                .signWith(getSigningKey())
                 .compact();
     }
     public String getNameFromJwt(String token){

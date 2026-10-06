@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
-    private JwtCore jwtCore;
+    private final JwtCore jwtCore;
     private final AuthenticationManager authenticationManager;
 
     public AuthController(UserService userService, JwtCore jwtCore, AuthenticationManager authenticationManager) {
